@@ -4,7 +4,7 @@
   "description": "ファイル管理クラス",
   "main": "./dist/bundle.js",
   "scripts": {
-    "prepack": "webpack",
+    "postpack": "webpack",
     "test": "NODE_ENV=test jest",
     "build": "webpack",
     "dev": "webpack --mode development --watch",
