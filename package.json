@@ -1,0 +1,25 @@
+{
+  "name": "filecontainer",
+  "version": "1.0.0",
+  "description": "ファイル管理クラス",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nojaja/FileContainer.git"
+  },
+  "author": "nojaja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nojaja/FileContainer/issues"
+  },
+  "homepage": "https://github.com/nojaja/FileContainer#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-jest": "^25.5.1",
+    "jest": "^25.5.4"
+  }
+}
