@@ -2,9 +2,13 @@
   "name": "filecontainer",
   "version": "1.0.0",
   "description": "ファイル管理クラス",
-  "main": "./src/index.js",
+  "main": "./dist/bundle.js",
   "scripts": {
-    "test": "NODE_ENV=test jest"
+    "prepack": "webpack",
+    "test": "NODE_ENV=test jest",
+    "build": "webpack",
+    "dev": "webpack --mode development --watch",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,9 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "babel-jest": "^25.5.1",
-    "jest": "^25.5.4"
+    "jest": "^25.5.4",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }
