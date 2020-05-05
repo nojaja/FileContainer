@@ -17,7 +17,8 @@ module.exports = {
     filename: 'bundle.js',
     sourceMapFilename: '[name].map',
     path: dist,
-    publicPath:""
+    publicPath:"",
+    libraryTarget: 'commonjs2'
   },
   module: {
   }

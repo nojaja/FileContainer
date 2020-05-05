@@ -1,4 +1,4 @@
-import { FileContainer } from '../../src/index'
+import { FileContainer, FileData } from '../../dist/bundle'
 
 
 test('setId', () => {
