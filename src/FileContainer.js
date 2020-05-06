@@ -8,8 +8,9 @@ import FileData from './FileData.js'
   ファイル管理クラス FileContainer
 ------------------------------------------------ */
 export class FileContainer {
-  constructor (monaco) {
-    this.monaco = monaco
+  // constructor (monaco) {
+  constructor () {
+    // this.monaco = monaco
     this.container = {
       v: 0.1,
       id: null,
@@ -33,13 +34,13 @@ export class FileContainer {
     return this.container.id
   }
 
-  setMonaco (monaco) {
-    this.monaco = monaco
-  }
+  // setMonaco (monaco) {
+  //   this.monaco = monaco
+  // }
 
-  getMonaco () {
-    return this.monaco
-  }
+  // getMonaco () {
+  //   return this.monaco
+  // }
 
   setProjectName (projectName) {
     this.container.projectName = projectName
@@ -63,7 +64,7 @@ export class FileContainer {
   getFile (filename) {
     if (filename in this.container.files) {
       if (!(filename in this.fileObjects)) {
-        this.fileObjects[filename] = new FileData(this.container.files[filename], this.monaco)
+        this.fileObjects[filename] = new FileData(this.container.files[filename])
       }
       return this.fileObjects[filename]
     }
@@ -174,6 +175,7 @@ export class FileContainer {
     this.container.lastUpdatedTime = lastUpdatedTime
   }
 }
+
 export default FileContainer
 if (typeof window !== 'undefined') {
   !window.FileContainer && (window.FileContainer = FileContainer)
