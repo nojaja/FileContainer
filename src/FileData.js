@@ -21,21 +21,7 @@ export class FileData {
         content: file && file.content ? file.content : '',
         description: file && file.description ? file.description : ''
       }
-      this.editorData = {}
       if (file && file.filename) this.setAutoType (file.filename)
-      // this.monaco = _monaco
-      // if (this.monaco) this.editorData.source.model.setValue(this.file.content)
-    }
-  }
-
-  addEditorData (key, caption, type, model) {
-    if(!this.editorData[key]) {
-        this.editorData[key] = {
-            caption : caption,
-            model: model,
-            state: null,
-            decorations : []
-        }
     }
   }
 
@@ -73,7 +59,7 @@ export class FileData {
   }
 
   getContent () {
-    return this.file.content
+    return this.file.content || ''
   }
 
   setFilename (filename) {
@@ -136,14 +122,6 @@ export class FileData {
 
   getDescription () {
     return this.file.description
-  }
-
-  setEditorData (data) {
-    this.editorData = data
-  }
-
-  getEditorData () {
-    return this.editorData
   }
 
   getFileData () {
