@@ -3,6 +3,7 @@ Copyright 2017 - 2018
 ***********************************************/
 /* v1.0.0 */
 import FileData from './FileData.js'
+import {EventEmitter} from 'events'
 
 /* ------------------------------------------------
   ファイル管理クラス FileContainer
@@ -22,6 +23,19 @@ export class FileContainer {
       description: ''
     }
     this.fileObjects = {}
+    this.ev = new EventEmitter ()
+  }
+
+  onChangeFiles (callback) {
+    this.ev.on('change', callback)
+  }
+
+  onOpenFile (callback) {
+    this.ev.on('open', callback)
+  }
+
+  onCloseFile (callback) {
+    this.ev.on('close', callback)
   }
 
   setId (id) {
@@ -40,12 +54,35 @@ export class FileContainer {
     return this.container.projectName
   }
 
-  getFiles () {
+  getFiles ( parentPath = null) {
     // 配列のキーを取り出す
-    var ret = []
-    for (var key in this.container.files) {
+    let ret = []
+    for (let key in this.container.files) {
       if (!this.container.files[key].truncated) {
-        ret.push(key)
+        if (!parentPath) {
+          ret.push(key)
+        } else {
+          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
+            ret.push(key)
+          }
+        }
+      }
+    }
+    return ret
+  }
+
+  getOpenFiles ( parentPath = null) {
+    // 配列のキーを取り出す
+    let ret = []
+    for (let key in this.fileObjects) {
+      if (!this.container.files[key].truncated) {
+        if (!parentPath) {
+          ret.push(key)
+        } else {
+          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
+            ret.push(key)
+          }
+        }
       }
     }
     return ret
@@ -54,38 +91,81 @@ export class FileContainer {
   getFile (filename, fileCls, ...constructorParam) {
     let Cls = fileCls || FileData
     if (filename in this.container.files) {
-      if (!(filename in this.fileObjects)) {
-        this.fileObjects[filename] = new Cls(this.container.files[filename],...constructorParam)
-      }
-      return this.fileObjects[filename]
+      return new Cls(this.container.files[filename],...constructorParam)
     }
+    return false
   }
 
   getFileRaw (filename) {
     if (filename in this.container.files) {
       return this.container.files[filename]
     }
+    return false
+  }
+
+  openFile (filename, fileCls, ...constructorParam) {
+    if (filename in this.container.files) {
+      if (!(filename in this.fileObjects)) {
+        this.fileObjects[filename] = this.getFile(filename, fileCls, ...constructorParam)
+      }
+      this.ev.emit('open', filename, this.fileObjects[filename])
+      return this.fileObjects[filename]
+    }
+    return false
+  }
+
+  closeFile (filename) {
+    if (filename in this.container.files) {
+      if (filename in this.fileObjects) {
+        const ret = this.fileObjects[filename]
+        delete this.fileObjects[filename]
+        this.ev.emit('close', filename)
+        return ret
+      }
+    }
+    return null
+  }
+
+  saveFile (filename) {
+    if (filename in this.container.files) {
+      if (!(filename in this.fileObjects)) {
+        return this.putFile(this.fileObjects[filename])
+      }
+    }
+    return false
   }
 
   putFile (file) {
-    var filename = file.getFilename()
+    const filename = file.getFilename()
     this.container.files[filename] = file.getFileData()
     this.container.lastUpdatedTime = new Date().getTime()
+    this.ev.emit('change', filename)
     return true
   }
 
   renameFile (filename, newName) {
-    var file = this.getFile(filename)
-    file.setFilename(newName)
-    this.putFile(file)
-    delete this.container.files[filename]
+    if (filename in this.container.files) {
+      let file = new FileData(this.container.files[filename])
+      file.setFilename(newName)
+      delete this.container.files[filename]
+      this.putFile(file)
+      this.container.lastUpdatedTime = new Date().getTime()
+      return true
+    }
+    return false
   }
 
   removeFile (filename) {
-    var file = this.getFile(filename)
-    file.remove()
-    this.putFile(file)
-    this.container.lastUpdatedTime = new Date().getTime()
+    if (filename in this.container.files) {
+      let file = new FileData(this.container.files[filename])
+      file.remove()
+      delete this.container.files[filename]
+      delete this.fileObjects[filename]
+      this.putFile(file)
+      this.container.lastUpdatedTime = new Date().getTime()
+      return true
+    }
+    return false
   }
 
   init () {
@@ -122,6 +202,7 @@ export class FileContainer {
   setContainer (container) {
     this.container = container
     this.fileObjects = {}
+    this.ev.emit('change', null)
   }
 
   getContainer () {
@@ -138,7 +219,7 @@ export class FileContainer {
   }
 
   getGistData () {
-    var gistdata = {
+    let gistdata = {
       description: this.container.projectName + '\n' + this.container.description,
       public: this.container.public,
       files: this.container.files
