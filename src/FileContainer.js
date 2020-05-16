@@ -54,21 +54,53 @@ export class FileContainer {
     return this.container.projectName
   }
 
-  getFiles ( parentPath = null) {
+  
+  getDirectories ( parentPath = null) {
     // 配列のキーを取り出す
-    let ret = []
+    let ret = {}
     for (let key in this.container.files) {
       if (!this.container.files[key].truncated) {
         if (!parentPath) {
-          ret.push(key)
+          // let mp = key.match(/((.+?\/)+).+\.[^.]+$/)
+          let mp = key.match(/(.+?\/)/)
+          if(mp){
+            ret[mp[1]] = mp[1]
+          }
         } else {
           if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
-            ret.push(key)
+            const _key = key.substring(parentPath.length)
+            let mp = _key.match(/(.+?\/)/)
+            if(mp){
+              ret[parentPath+mp[1]] = mp[1]
           }
         }
       }
     }
-    return ret
+    }
+    return Object.keys(ret).map(key => { return {"path": key, "name": ret[key]} });
+  }
+
+  getFiles ( parentPath = null) {
+    // 配列のキーを取り出す
+    let ret = {}
+    for (let key in this.container.files) {
+      if (!this.container.files[key].truncated) {
+        if (!parentPath && key.indexOf('/')==-1) {
+          let mp = key.match(/\/?([^\/]+\.[^.]+)$/)
+          if(mp){
+            ret[key] = mp[1]
+          }
+        } else {
+          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
+            let mp = key.match(/\/?([^\/]+\.[^.]+)$/)
+            if(mp){
+              ret[key] = mp[1]
+            }
+          }
+        }
+      }
+    }
+    return Object.keys(ret).map(key => { return {"path": key, "name": ret[key]} });
   }
 
   getOpenFiles ( parentPath = null) {

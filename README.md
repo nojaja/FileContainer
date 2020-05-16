@@ -3,3 +3,14 @@
 
 # FileContainer
 ファイル管理クラス
+
+## Installing
+
+	npm install filecontainer
+
+
+## Usage In Node
+
+```javascript
+
+```
