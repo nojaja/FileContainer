@@ -40,9 +40,13 @@ export class EditorFileData extends FileData {
   }
 
   setEditorData (data) {
+    const value = data.model.getValue()
+    if (this.file.content !== value) {
     this.editorData = data
-    this.file.content = this.editorData.model.getValue()
-    return data
+      this.file.content = data.model.getValue()
+      return true
+    }
+    return false
   }
 
   getEditorData () {
