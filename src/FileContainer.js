@@ -67,31 +67,35 @@ export class FileContainer {
             ret[mp[1]] = mp[1]
           }
         } else {
-          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
+          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length) > 0 ) {
             const _key = key.substring(parentPath.length)
             let mp = _key.match(/(.+?\/)/)
             if(mp){
               ret[parentPath+mp[1]] = mp[1]
+            }
           }
         }
       }
     }
-    }
     return Object.keys(ret).map(key => { return {"path": key, "name": ret[key]} });
   }
 
-  getFiles ( parentPath = null) {
+  getFiles ( parentPath = null, all = false) {
     // 配列のキーを取り出す
     let ret = {}
     for (let key in this.container.files) {
       if (!this.container.files[key].truncated) {
-        if (!parentPath && key.indexOf('/')==-1) {
+        if (!parentPath && (all || key.indexOf('/')==-1)) { 
+          // parentPathを指定してない場合 最上位階層のファイルを返す
+          // all = trueの場合は全ファイルを返す
           let mp = key.match(/\/?([^\/]+\.[^.]+)$/)
           if(mp){
             ret[key] = mp[1]
           }
-        } else {
-          if(key.indexOf(parentPath)==0 && key.indexOf('/', parentPath.length)==-1 ) {
+        } else { 
+          // parentPathを指定した場合　そのpathの直配下のファイルを返す
+          // all = trueの場合は全配下のファイルを返す
+          if(key.indexOf(parentPath)==0 && (all || key.indexOf('/', parentPath.length)==-1 )) {
             let mp = key.match(/\/?([^\/]+\.[^.]+)$/)
             if(mp){
               ret[key] = mp[1]
@@ -201,6 +205,7 @@ export class FileContainer {
         let file = new FileData(this.container.files[filename])
         file.setFilename(newName)
         delete this.container.files[filename]
+        delete this.fileObjects[filename]
         this.putFile(file)
         this.container.lastUpdatedTime = new Date().getTime()
         return true
@@ -213,9 +218,9 @@ export class FileContainer {
     if (filename in this.container.files) {
       let file = new FileData(this.container.files[filename])
       file.remove()
+      this.putFile(file)
       delete this.container.files[filename]
       delete this.fileObjects[filename]
-      this.putFile(file)
       this.container.lastUpdatedTime = new Date().getTime()
       return true
     }

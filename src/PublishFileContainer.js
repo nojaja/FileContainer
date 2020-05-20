@@ -35,10 +35,10 @@ export class PublishFileContainer extends FileContainer {
 
   //ファイルキャッシュの更新
   refreshCache (fileCls, ...constructorParam) {
-    this.getFiles().forEach((filename, i) => {
-      const _file = this.getFile(filename,fileCls,...constructorParam) 
-      if(filename.indexOf(this.publicPath)==0){
-        this.saveCache(filename,_file.getContent(),_file.getType());
+    this.getFiles(null,true).forEach((filedata, i) => {
+      const _file = this.getFile(filedata.path,fileCls,...constructorParam) 
+      if(filedata.path.indexOf(this.publicPath)==0){
+        this.saveCache(filedata.path,_file.getContent(),_file.getType());
       }
     });
   }
