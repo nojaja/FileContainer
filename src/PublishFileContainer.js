@@ -19,7 +19,7 @@ export class PublishFileContainer extends FileContainer {
   /**
   キャッシュファイルの登録
   */
-  async saveCache (url,source,type) {
+  saveCache (url,source,type) {
       return new Promise((resolve, reject) => {
           const _type = type || 'application/javascript; charset=UTF-8'
           const _url = location.href.substr(0,location.href.substr(0,location.href.length-location.search.length).lastIndexOf("/")) // URLの最初のパスまで
@@ -34,7 +34,7 @@ export class PublishFileContainer extends FileContainer {
   }
 
   //ファイルキャッシュの更新
-  refreshCache (fileCls, ...constructorParam) {
+  async refreshCache (fileCls, ...constructorParam) {
     this.getFiles(null,true).forEach((filedata, i) => {
       const _file = this.getFile(filedata.path,fileCls,...constructorParam) 
       if(filedata.path.indexOf(this.publicPath)==0){
@@ -43,11 +43,11 @@ export class PublishFileContainer extends FileContainer {
     });
   }
 
-  putFile (file) {
+  async putFile (file) {
     let ret = super.putFile(file)
     const filename = file.getFilename() || ''
     if(filename.indexOf(this.publicPath)==0){
-      this.saveCache(filename, file.getContent(), file.getType())
+      await this.saveCache(filename, file.getContent(), file.getType())
     }
     return ret
   }

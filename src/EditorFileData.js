@@ -76,7 +76,6 @@ export class EditorFileData extends FileData {
     }else{
         this.addEditorData(filename, 'txt', monaco.editor.createModel('', 'text/plain'))
     }
-    console.log('setEditorDatas_2',this.editorData,this.monaco,monaco)
   }
 
 }
