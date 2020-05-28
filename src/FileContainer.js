@@ -48,7 +48,7 @@ export class FileContainer {
   }
 
   getId () {
-    return this.container.id || null
+    return this.container.id || Date.now() + Math.floor(1e4 + 9e4 * Math.random())
   }
 
   setGistId (gistid) {
