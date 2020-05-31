@@ -216,7 +216,7 @@ export class FileContainer {
 
   renameFile (filename, newName) {
     if (filename in this.container.files) {
-      if (!newName in this.container.files) {
+      if (!(newName in this.container.files)) {
         let file = new FileData(this.container.files[filename])
         file.setFilename(newName)
         delete this.container.files[filename]
