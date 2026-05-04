@@ -1,6 +1,6 @@
 {
     "name": "@nojaja/filecontainer",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "File container and management utility class for JavaScript applications",
     "keywords": ["file", "container", "file-management", "javascript", "file-data"],
     "main": "./dist/bundle.js",
