@@ -1,38 +1,37 @@
-{
-  "name": "filecontainer",
-  "version": "1.0.0",
-  "description": "ファイル管理クラス",
-  "main": "./dist/bundle.js",
-  "files": [
-    "dist/**/*"
-  ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "scripts": {
-    "test": "NODE_ENV=test webpack && jest",
-    "build": "webpack",
-    "prepublishOnly": "npm run build",
-    "dev": "webpack --mode development --watch",
-    "start": "webpack-dev-server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nojaja/FileContainer.git"
-  },
-  "author": "nojaja",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nojaja/FileContainer/issues"
-  },
-  "homepage": "https://github.com/nojaja/FileContainer#readme",
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
-    "babel-jest": "^25.5.1",
-    "jest": "^25.5.4",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
-  }
+﻿{
+    "name": "filecontainer",
+    "version": "1.0.0",
+    "description": "ファイル管理クラス",
+    "main": "./dist/bundle.js",
+    "files": [
+        "dist/**/*"
+    ],
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "scripts": {
+        "test": "NODE_ENV=test webpack && jest",
+        "build": "webpack",
+        "dev": "webpack --mode development --watch",
+        "start": "webpack-dev-server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nojaja/FileContainer.git"
+    },
+    "author": "nojaja",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nojaja/FileContainer/issues"
+    },
+    "homepage": "https://github.com/nojaja/FileContainer#readme",
+    "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
+        "babel-jest": "^25.5.1",
+        "jest": "^25.5.4",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.2"
+    }
 }
