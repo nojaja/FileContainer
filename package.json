@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "ファイル管理クラス",
   "main": "./dist/bundle.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
-    "postinstall": "webpack",
     "test": "NODE_ENV=test webpack && jest",
     "build": "webpack",
+    "prepublishOnly": "npm run build",
     "dev": "webpack --mode development --watch",
     "start": "webpack-dev-server"
   },
