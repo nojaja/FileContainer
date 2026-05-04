@@ -1,19 +1,23 @@
 {
-    "name": "filecontainer",
-    "version": "1.0.0",
-    "description": "ファイル管理クラス",
+    "name": "@nojaja/filecontainer",
+    "version": "1.0.1",
+    "description": "File container and management utility class for JavaScript applications",
+    "keywords": ["file", "container", "file-management", "javascript", "file-data"],
     "main": "./dist/bundle.js",
     "files": [
-        "dist/**/*"
+        "dist",
+        "README.md",
+        "LICENSE"
     ],
     "publishConfig": {
-        "registry": "https://npm.pkg.github.com"
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
     },
     "scripts": {
-        "test": "NODE_ENV=test webpack && jest",
-        "build": "webpack",
-        "dev": "webpack --mode development --watch",
-        "start": "webpack-dev-server"
+        "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test webpack && jest",
+        "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack",
+        "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --watch",
+        "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server"
     },
     "repository": {
         "type": "git",
@@ -29,6 +33,7 @@
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
         "babel-jest": "^25.5.1",
+        "cross-env": "^10.1.0",
         "jest": "^25.5.4",
         "webpack": "^4.46.0",
         "webpack-cli": "^3.3.12",
