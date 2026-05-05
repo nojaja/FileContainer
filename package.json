@@ -63,7 +63,7 @@
         "typedoc": "^0.28.19",
         "typedoc-plugin-markdown": "^4.11.0",
         "typescript": "^6.0.3",
-        "webpack": "^4.46.0",
+        "webpack": "^5.106.2",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.2"
     }
