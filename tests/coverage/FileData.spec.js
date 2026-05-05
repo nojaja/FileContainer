@@ -1,4 +1,4 @@
-import { FileData } from '../../dist/bundle'
+import { FileData } from '../../src/FileData'
 
 describe('FileData - constructor', () => {
   test('引数なしで生成できる', () => {

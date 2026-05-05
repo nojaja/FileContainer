@@ -1,4 +1,5 @@
-import { FileContainer, FileData } from '../../dist/bundle'
+import { FileContainer } from '../../src/FileContainer'
+import { FileData } from '../../src/FileData'
 
 // FileData のモック生成ヘルパー
 function makeFileData(filename, content = 'content') {
@@ -416,18 +417,24 @@ describe('FileContainer - イベントリスナー', () => {
     fc.putFile(makeFileData('event.txt'))
   })
 
-  test('onOpenFile が openFile で呼ばれる', async (done) => {
-    const fc = new FileContainer()
-    await fc.putFile(makeFileData('openevent.txt'))
-    fc.onOpenFile(() => done())
-    fc.openFile('openevent.txt')
+  test('onOpenFile が openFile で呼ばれる', () => {
+    return new Promise(resolve => {
+      const fc = new FileContainer()
+      fc.putFile(makeFileData('openevent.txt')).then(() => {
+        fc.onOpenFile(() => resolve(undefined))
+        fc.openFile('openevent.txt')
+      })
+    })
   })
 
-  test('onCloseFile が closeFile で呼ばれる', async (done) => {
-    const fc = new FileContainer()
-    await fc.putFile(makeFileData('closeevent.txt'))
-    fc.openFile('closeevent.txt')
-    fc.onCloseFile(() => done())
-    fc.closeFile('closeevent.txt')
+  test('onCloseFile が closeFile で呼ばれる', () => {
+    return new Promise(resolve => {
+      const fc = new FileContainer()
+      fc.putFile(makeFileData('closeevent.txt')).then(() => {
+        fc.openFile('closeevent.txt')
+        fc.onCloseFile(() => resolve(undefined))
+        fc.closeFile('closeevent.txt')
+      })
+    })
   })
 })
