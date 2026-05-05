@@ -3,11 +3,11 @@ name: Auto Release on Version Change
 # package.json の version が変更されたとき、タグ作成・GitHub Release・npm 公開を自動実行する
 on:
   push:
-    branches: ['main']
+    branches: ['main','master']
     paths:
       - 'package.json'
   pull_request:
-    branches: ['main']
+    branches: ['main','master']
     paths:
       - 'package.json'
 
