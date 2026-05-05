@@ -11,7 +11,10 @@ module.exports = {
   },
   context: src,
   entry: {
-    main: './index.js',
+    main: './index.ts',
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   output: {
     filename: 'bundle.js',
@@ -21,5 +24,12 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
+      }
+    ]
   }
 }

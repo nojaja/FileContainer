@@ -1,8 +1,15 @@
 {
     "name": "@nojaja/filecontainer",
-    "version": "1.0.2",
+    "version": "1.0.3",
+    "type": "commonjs",
     "description": "File container and management utility class for JavaScript applications",
-    "keywords": ["file", "container", "file-management", "javascript", "file-data"],
+    "keywords": [
+        "file",
+        "container",
+        "file-management",
+        "javascript",
+        "file-data"
+    ],
     "main": "./dist/bundle.js",
     "files": [
         "dist",
@@ -14,10 +21,16 @@
         "access": "public"
     },
     "scripts": {
-        "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test webpack && jest",
+        "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test webpack && jest --config jest.coverage.config.js",
+        "test:ci": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test webpack && jest --config jest.coverage.config.js --coverage",
         "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack",
         "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --watch",
-        "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server"
+        "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server",
+        "type-check": "tsc --noEmit",
+        "lint": "eslint src/",
+        "depcruise": "depcruise --config .dependency-cruiser.js src",
+        "cpd": "jscpd src --min-lines 5 --min-tokens 50 --threshold 0",
+        "docs": "typedoc"
     },
     "repository": {
         "type": "git",
@@ -32,9 +45,24 @@
     "devDependencies": {
         "@babel/core": "^7.14.3",
         "@babel/preset-env": "^7.14.4",
-        "babel-jest": "^25.5.1",
+        "@babel/preset-typescript": "^7.28.5",
+        "@types/jest": "^29.5.14",
+        "@types/node": "^25.6.0",
+        "@typescript-eslint/eslint-plugin": "^8.59.2",
+        "@typescript-eslint/parser": "^8.59.2",
+        "babel-jest": "^29.7.0",
+        "babel-loader": "^8.4.1",
         "cross-env": "^10.1.0",
-        "jest": "^25.5.4",
+        "dependency-cruiser": "^17.4.0",
+        "eslint": "^10.3.0",
+        "eslint-plugin-jsdoc": "^62.9.0",
+        "eslint-plugin-sonarjs": "^4.0.3",
+        "jest": "^29.7.0",
+        "jscpd": "^4.0.9",
+        "ts-jest": "^29.4.9",
+        "typedoc": "^0.28.19",
+        "typedoc-plugin-markdown": "^4.11.0",
+        "typescript": "^6.0.3",
         "webpack": "^4.46.0",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.2"

@@ -1,0 +1,10 @@
+module.exports = {
+  entryPointStrategy: 'expand',
+  entryPoints: ['./src'],
+  out: './docs/typedoc-md',
+  plugin: ['typedoc-plugin-markdown'],
+  excludePrivate: true,
+  excludeProtected: false,
+  excludeExternals: true,
+  readme: 'none',
+};
