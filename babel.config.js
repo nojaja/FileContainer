@@ -7,11 +7,15 @@ module.exports = {
                 'useBuiltIns': 'usage',
                 'targets': '> 0.25%, not dead',
             }
-        ]
+        ],
+        '@babel/preset-typescript'
     ],
     env: {
         test: {
-            presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+            presets: [
+                ['@babel/preset-env', {targets: {node: 'current'}}],
+                '@babel/preset-typescript'
+            ],
         },
     },
 };
