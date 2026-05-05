@@ -1,6 +1,6 @@
 {
     "name": "@nojaja/filecontainer",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "type": "commonjs",
     "description": "File container and management utility class for JavaScript applications",
     "keywords": [
