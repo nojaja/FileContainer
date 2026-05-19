@@ -1,0 +1,42 @@
+name: Dependabot Auto Merge
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+jobs:
+  dependabot-auto-merge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # alert-lookup: true により alert-state を取得する
+          # security_events: read 権限が必要なため、PAT または GitHub App token を使用すること（要件 14-1）
+          alert-lookup: true
+
+      - name: Show metadata for auditability
+        run: |
+          echo "dependency-type=${{ steps.metadata.outputs.dependency-type }}"
+          echo "update-type=${{ steps.metadata.outputs.update-type }}"
+          echo "alert-state=${{ steps.metadata.outputs.alert-state }}"
+
+      - name: Enable auto-merge for allowed updates
+        if: >-
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.alert-state == 'OPEN'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 判定条件: semver-patch 更新 OR セキュリティアラートが OPEN の PR を自動マージ予約する
+          # minor / major 更新は対象外にして手動レビューに残す
+          gh pr merge --auto --merge "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}"
