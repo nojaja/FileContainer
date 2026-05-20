@@ -33,6 +33,7 @@ jobs:
       - name: Enable auto-merge for allowed updates
         if: >-
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
           steps.metadata.outputs.alert-state == 'OPEN'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
