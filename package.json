@@ -55,7 +55,7 @@
         "cross-env": "^10.1.0",
         "dependency-cruiser": "^17.4.0",
         "eslint": "^10.3.0",
-        "eslint-plugin-jsdoc": "^62.9.0",
+        "eslint-plugin-jsdoc": "^63.0.5",
         "eslint-plugin-sonarjs": "^4.0.3",
         "jest": "^30.4.2",
         "jscpd": "^4.0.9",
